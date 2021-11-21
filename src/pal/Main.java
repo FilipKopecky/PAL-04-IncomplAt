@@ -27,7 +27,7 @@ public class Main {
         }
 
         public String readLine() throws IOException {
-            byte[] buf = new byte[30000]; // line length
+            byte[] buf = new byte[30001]; // line length
             int cnt = 0, c;
             while ((c = read()) != -1) {
                 if (c == '\n') {
@@ -71,7 +71,7 @@ public class Main {
     }
 
     public static void main(String[] args) throws IOException {
-        Reader reader = new Reader("datasets/pub01.in");
+        Reader reader = new Reader();
         int numStates = reader.nextInt();
         int alphabetSize = reader.nextInt();
         int numFinalStates = reader.nextInt();
@@ -86,21 +86,19 @@ public class Main {
                 states[i][j] = reader.nextInt();
             }
         }
-        byte[][] words = new byte[numPositive][exampleLength];
-        reader.read();
+        ArrayList<char[]>words = new ArrayList<>();
+      //  byte[][] words = new byte[numPositive][exampleLength];
         for (int i = 0; i < numPositive; i++) {
-            for (int j = 0; j < exampleLength; j++) {
-                words[i][j]=reader.read();
-            }
-            reader.read();
-            reader.read();
+               //System.out.print(reader.readLine());
+                char[]word=reader.readLine().substring(0,exampleLength).toCharArray();
+                words.add(word);
         }
         for (int i = 0; i < numNegative; i++) {
            reader.readLine();
         }
-       // System.out.println("DONE");
+      //  System.out.println("DONE");
         //int[] vector = new int[numFinalStates + 1];
-        Alg alg = new Alg(states,words,numPositive,exampleLength);
+       Alg alg = new Alg(states,words,numPositive,exampleLength);
 
         for (int i = 0; i < numStates; i++) {
             ArrayList<Integer>vector= new ArrayList<>();
